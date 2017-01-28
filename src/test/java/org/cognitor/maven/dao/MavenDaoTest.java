@@ -29,7 +29,6 @@ public class MavenDaoTest {
     private MavenDao mavenDao;
 
     @Before
-    @Ignore
     public void before() {
         this.mavenConfiguration = new MavenConfiguration().setUrl("http://maven.sonar.org");
         this.mavenDao = new MavenDao(restTemplateMock, mavenConfiguration);
@@ -46,6 +45,7 @@ public class MavenDaoTest {
     }
 
     @Test
+    @Ignore
     public void shouldReturnNotFoundWhenNoVersionInformationWasFound() {
         when(restTemplateMock.getForObject(anyString(), MavenResponse.class)).thenReturn(
                 new MavenResponse().setResponse(new Response().setNumFound(0)));
