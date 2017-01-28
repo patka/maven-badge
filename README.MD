@@ -21,7 +21,7 @@ you can create a runnable jar that can then be copied to the target system.
  
 You can run it by invoking
 ```
-$ java -jar "-Dmaven.url=https://<yourNexushere>" MavenBadgeApplication.jar
+$ java -jar "-Dmaven.url=https://<yourNexusHere>" MavenBadgeApplication.jar
 ```
  
 Usually Sonatype Nexus supports a web service to query the repo.
@@ -34,9 +34,9 @@ The url you have to provide here is everything up to the /solrsearch... part.
 ## Usage
 
 Once the application is started you can generate URLs that follow this scheme:
-
+```
 http://localhost:8080/maven/<groupId>/<artifactId>/badge.png
-
+```
 This will return the picture that can be referenced inside any HTML or Markdown page.
 
 
