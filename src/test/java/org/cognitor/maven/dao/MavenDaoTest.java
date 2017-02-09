@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -28,16 +31,18 @@ public class MavenDaoTest {
 
     private MavenDao mavenDao;
 
+    private URI expectedUri;
+
     @Before
-    public void before() {
+    public void before() throws URISyntaxException {
         this.mavenConfiguration = new MavenConfiguration().setUrl("http://maven.sonar.org");
         this.mavenDao = new MavenDao(restTemplateMock, mavenConfiguration);
+        expectedUri = new URI("http://maven.sonar.org/solrsearch/select?q=g:org.cognitor.maven+AND+a:maven-badge&rows=1&core=gav");
     }
 
     @Test
-    @Ignore
-    public void shouldReturnCorrectVersionWhenSearchResultGiven() {
-        when(restTemplateMock.getForObject(anyString(), MavenResponse.class)).thenReturn(
+    public void shouldReturnCorrectVersionWhenSearchResultGiven() throws URISyntaxException {
+        when(restTemplateMock.getForObject(expectedUri, MavenResponse.class)).thenReturn(
                 new MavenResponse().setResponse(
                         new Response().setDocs(asList(new Doc().setV("1.0.0"))).setNumFound(1)));
 
@@ -45,9 +50,8 @@ public class MavenDaoTest {
     }
 
     @Test
-    @Ignore
     public void shouldReturnNotFoundWhenNoVersionInformationWasFound() {
-        when(restTemplateMock.getForObject(anyString(), MavenResponse.class)).thenReturn(
+        when(restTemplateMock.getForObject(expectedUri, MavenResponse.class)).thenReturn(
                 new MavenResponse().setResponse(new Response().setNumFound(0)));
 
         assertThat(mavenDao.getLatestVersion("org.cognitor.maven", "maven-badge"), is(equalTo("Not Found")));
