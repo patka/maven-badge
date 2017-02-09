@@ -3,6 +3,8 @@
 ## Purpose
 This is a very simple Spring Boot application that will generate the well known Maven badges as PNG images.
 
+A Maven badge is this small icon on the projects readme that can tell you the latest version of the project available in Maven. Like this: [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.cognitor.cassandra/cassandra-migration/badge.svg)](https://maven-badges.herokuapp.com/maven-central//org.cognitor.cassandra/cassandra-migration)
+
 Although there are maven badge generators available in the internet, I needed one that I can install
 within the company premises that I can configure for the local Nexus
 to generate badges that are displayed on the internal Gitlab Readme files.
